@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXERCISE 2 </title>
+    <style>
+     
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f2f7; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; 
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .main-container{
+            display: flexbox;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #cceeff; 
+        }
+
+        h1 {
+            color: #007bff; 
+            margin-bottom: 25px;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 24px); 
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #b3e0ff; 
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box; 
+            outline: none; 
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff; 
+        }
+
+        button {
+            background-color: #28a745; 
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background-color: #218838; 
+            transform: translateY(-2px); 
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #resultArea {
+            margin-top: 30px;
+            padding: 18px;
+            background-color: #e6f7ff; 
+            border: 1px solid #99daff;
+            border-radius: 8px;
+            font-size: 20px;
+            color: #0056b3; 
+            font-weight: bold;
+            display: none; 
+            word-wrap: break-word; 
+        }
+
+        #errorMessage {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #ffe0e6; 
+            border: 1px solid #ff99b3;
+            border-radius: 8px;
+            color: #cc0033; 
+            font-size: 16px;
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <h1>Write a JavaScript Function that returns a passed string with letters in Alphabetical Order</h1>
+    <center>
+    <div class="container">
+        <h1>Sort Letters Alphabetically</h1>
+
+        <label for="inputString">Enter some letters or words:</label>
+        <input type="text" id="inputString" placeholder="Type here to sort in order">
+
+        <button id="sortButton">Sort Letters</button>
+
+        <div id="resultArea">
+            Sorted String: <span id="sortedOutput"></span>
+        </div>
+
+        <div id="errorMessage">
+            <span id="errorText"></span>
+        </div>
+    </div>
+    </center>
+</div>
+    <script>
+        function sortStringAlphabetically(inputStr) {
+            if (typeof inputStr !== 'string') {
+                return ''; 
+            }
+
+            const charArray = inputStr.split('');
+            charArray.sort();
+            const sortedStr = charArray.join('');
+            return sortedStr;
+        }
+
+        const inputString = document.getElementById('inputString');
+        const sortButton = document.getElementById('sortButton');
+        const resultArea = document.getElementById('resultArea');
+        const sortedOutput = document.getElementById('sortedOutput');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const errorTextSpan = document.getElementById('errorText');
+
+        function showErrorMessage(message) {
+            errorTextSpan.textContent = message;
+            errorMessageDiv.style.display = 'block'; 
+            resultArea.style.display = 'none';     
+        }
+
+        function hideErrorMessage() {
+            errorMessageDiv.style.display = 'none'; 
+            errorTextSpan.textContent = '';        
+        }
+
+        function handleSortButtonClick() {
+            hideErrorMessage(); 
+
+            const inputValue = inputString.value.trim(); 
+
+            if (inputValue === '') {
+                showErrorMessage("Please type some letters or words in the box.");
+                return; 
+            }
+
+            const sortedResult = sortStringAlphabetically(inputValue);
+
+            sortedOutput.textContent = sortedResult;
+            resultArea.style.display = 'block'; 
+        }
+        sortButton.addEventListener('click', handleSortButtonClick);
+        inputString.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSortButtonClick();
+            }
+        });
+    </script>
+
+</body>
+</html>
