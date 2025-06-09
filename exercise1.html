@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXERCISE 1</title>
+    <style>
+ 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121111; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px; 
+        }
+        .mian-container{
+            display: flexbox;
+        }
+
+        .container {
+            background-color: #ffffff; 
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            text-align: center;
+            width: 100%;
+            max-width: 400px; 
+        }
+
+        h1 {
+            color: #d50a0a;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block; 
+            margin-bottom: 10px;
+            color: #8e2424;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            width: calc(100% - 20px); 
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box; 
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        button {
+            background-color: #007bff; 
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease; 
+        }
+
+        button:hover {
+            background-color: #8ab9ec; 
+        }
+
+        #resultOutput {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e9ecefab; 
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+            display: none; 
+        }
+
+        #errorMessage {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da; 
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            color: #721c24; 
+            font-size: 14px;
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">   
+<h1>Write a JavaScript function that reverse a number </h1>
+
+    <div class="container">
+        <h1>Reverse a Number</h1>
+
+        <label for="inputNumber">Enter a number:</label>
+        <input type="number" id="inputNumber" placeholder="eg. 12345">
+
+        <button id="reverseButton">Reverse It!</button>
+
+        <div id="resultOutput">
+            Reversed: <span id="reversedValue"></span>
+        </div>
+
+        <div id="errorMessage">
+            <span id="errorText"></span>
+        </div>
+    </div>
+</div>
+    <script>
+        function reverseNumber(num) {
+            if (typeof num !== 'number' || isNaN(num)) {
+                return NaN;
+            }
+
+            const numAsString = String(Math.abs(num));
+            const reversedString = numAsString.split('').reverse().join('');
+            let reversedValue = parseFloat(reversedString);
+            if (num < 0) {
+                reversedValue = -reversedValue;
+            }
+
+            return reversedValue;
+        }
+
+        const inputNumber = document.getElementById('inputNumber');
+        const reverseButton = document.getElementById('reverseButton');
+        const resultOutput = document.getElementById('resultOutput');
+        const reversedValueSpan = document.getElementById('reversedValue');
+        const errorMessageDiv = document.getElementById('errorMessage');
+        const errorTextSpan = document.getElementById('errorText');
+
+
+        function showErrorMessage(message) {
+            errorTextSpan.textContent = message;
+            errorMessageDiv.style.display = 'block'; 
+            resultOutput.style.display = 'none';   
+        }
+
+        function hideErrorMessage() {
+            errorTextSpan.textContent = '';
+            errorMessageDiv.style.display = 'none';  
+        }
+        function handleReverseButtonClick() {
+            hideErrorMessage(); 
+
+            const inputValue = inputNumber.value; 
+
+            if (inputValue.trim() === '') {
+                showErrorMessage("Please enter a number in the input field.");
+                return;
+            }
+
+            const num = Number(inputValue);
+
+            if (isNaN(num)) {
+                showErrorMessage("That's not a valid number. Please enter digits only.");
+                return; 
+            }
+
+            const reversed = reverseNumber(num);
+            reversedValueSpan.textContent = reversed;
+            resultOutput.style.display = 'block'; 
+        }
+
+        reverseButton.addEventListener('click', handleReverseButtonClick);
+        inputNumber.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleReverseButtonClick();
+            }
+        });
+    </script>
+
+</body>
+</html>
