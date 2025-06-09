@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXERCISE 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; 
+            display: flex;
+            justify-content: center; 
+            align-items: center;  
+            min-height: 100vh;    
+            margin: 0;            
+            padding: 20px;         
+            box-sizing: border-box; 
+        }
+
+        .main-container{
+            display: flexbox;
+        }
+
+        .calculator-container {
+            background-color: #ffffff; 
+            padding: 30px;
+            border: 1px solid #ddd; 
+            border-radius: 8px;     
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+            width: 100%;
+            max-width: 400px; 
+            box-sizing: border-box;
+        }
+
+        .input-row {
+            display: flex;      
+            align-items: center; 
+            margin-bottom: 15px; 
+        }
+
+        .input-row label {
+            width: 120px;      
+            font-weight: bold;  
+            color: #333;       
+            margin-right: 10px; 
+            flex-shrink: 0;    
+        }
+
+        .input-row input[type="text"] {
+            flex-grow: 1;     
+            padding: 10px;
+            border: 1px solid #ccc; 
+            border-radius: 4px;  
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-start; 
+            gap: 10px;                   
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+
+        .button-group button {
+            background-color: #007bff; 
+            color: white;             
+            padding: 10px 20px;
+            border: none;            
+            border-radius: 5px;       
+            cursor: pointer;        
+            font-size: 16px;
+            transition: background-color 0.3s ease; 
+        }
+
+        .button-group button:hover {
+            background-color: #0056b3; 
+        }
+
+        .result-area {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee; 
+            color: #333;
+            font-size: 18px;
+        }
+
+        #resultValue {
+            font-weight: bold;
+            color: #0056b3; 
+            font-size: 24px;
+            margin-top: 5px; 
+            word-wrap: break-word; 
+        }
+
+        .error-message {
+            color: #dc3545; 
+            font-size: 14px;
+            margin-top: 10px;
+            display: none; 
+        }
+
+        h1{
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <center>
+<div class="main-container">
+    <h1>Write a JavaScript Program to calculate multiplication and division of two numbers(input from the user)</h1>
+    <div class="calculator-container">
+ 
+        <div class="input-row">
+            <label for="firstNumber">1st Number :</label>
+            <input type="text" id="firstNumber">
+        </div>
+
+     
+        <div class="input-row">
+            <label for="secondNumber">2nd Number :</label>
+            <input type="text" id="secondNumber"> 
+        </div>
+
+ 
+        <div class="button-group">
+            <button id="multiplyButton">Multiply</button>
+            <button id="divideButton">Divide</button>
+        </div>
+
+        <div class="result-area">
+            <p>The Result Is :</p>
+            <p id="resultValue"></p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+    </div>
+    </center>
+</div>    
+
+    <script>
+        const firstNumberInput = document.getElementById('firstNumber');
+        const secondNumberInput = document.getElementById('secondNumber');
+        const multiplyButton = document.getElementById('multiplyButton');
+        const divideButton = document.getElementById('divideButton');
+        const resultValueDisplay = document.getElementById('resultValue');
+        const errorMessageDiv = document.getElementById('errorMessage');
+
+        function showErrorMessage(message) {
+            errorMessageDiv.textContent = message;
+            errorMessageDiv.style.display = 'block'; 
+            resultValueDisplay.textContent = '';     
+        }
+
+        function hideErrorMessage() {
+            errorMessageDiv.textContent = '';
+            errorMessageDiv.style.display = 'none'; 
+        }
+
+        function getAndValidateNumbers() {
+            hideErrorMessage(); 
+
+            const val1 = firstNumberInput.value.trim();
+            const val2 = secondNumberInput.value.trim();
+
+            if (val1 === '' || val2 === '') {
+                showErrorMessage("Please enter both numbers.");
+                return null;
+            }
+
+            const num1 = parseFloat(val1);
+            const num2 = parseFloat(val2);
+
+            if (isNaN(num1) || isNaN(num2)) {
+                showErrorMessage("Please enter valid numbers only.");
+                return null;
+            }
+
+            return { num1, num2 }; 
+        }
+
+        function handleMultiply() {
+            const numbers = getAndValidateNumbers(); 
+
+            if (numbers) { 
+                const result = numbers.num1 * numbers.num2;
+                resultValueDisplay.textContent = result; 
+            }
+        }
+
+        function handleDivide() {
+            const numbers = getAndValidateNumbers(); 
+
+            if (numbers) { 
+                if (numbers.num2 === 0) {
+                    showErrorMessage("Cannot divide by zero!");
+                    return; 
+                }
+                const result = numbers.num1 / numbers.num2;
+                resultValueDisplay.textContent = result; 
+            }
+        }
+
+     
+        multiplyButton.addEventListener('click', handleMultiply);
+        divideButton.addEventListener('click', handleDivide);
+
+    </script>
+
+</body>
+</html>
